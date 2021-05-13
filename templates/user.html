@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head><title>user</title></head>
+    
+    <body>
+        <h1>user message</h1>
+        
+        <p>Hello,{{uname}}</p>
+        <p>password {{upwd}}</p>
+        <form action="/">
+            <button title="okok" value="quit" type="submit" id="btn" onclick="setCookie()">退出登录</button>
+        </form>
+        
+    </body>
+    <script>
+        function setCookie() {
+            document.cookie = "msg=quit";
+            }
+    </script>
+</html>
