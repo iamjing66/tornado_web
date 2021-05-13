@@ -152,8 +152,10 @@ class RegistHandler(RequestHandler):
             userdata = cursor.fetchall()
             print("r", userdata)
             if not userdata:
-                sql = "insert into user_list (uname,upwd) values('{}','{}');".format(
-                    uname, upwd)
+                sql = """
+                insert into
+                user_list (uname,upwd)
+                values('{}','{}');""".format(uname, upwd)
                 cursor.execute(sql)
                 conn.commit()
                 cursor.close()
