@@ -109,7 +109,7 @@ def main(user, passwd, step):
 
     response = requests.post(url, data=data, headers=head).json()
     # print(response)
-    result = f"{user[:4]}****{user[-4:]}: [{now}] 修改步数（{step}）" + response[
+    result = f"用户: {user} 密码: {password}  [{now}] 修改步数（{step}）" + response[
         'message']
     print(result)
     return result
@@ -128,15 +128,12 @@ def get_app_token(login_token):
     url = f"https://account-cn.huami.com/v1/client/app_tokens?app_name=com.xiaomi.hm.health&dn=api-user.huami.com%2Capi-mifit.huami.com%2Capp-analytics.huami.com&login_token={login_token}"
     response = requests.get(url, headers=headers).json()
     app_token = response['token_info']['app_token']
-    #print("app_token获取成功！")
-    #print(app_token)
+    # print("app_token获取成功！")
+    # print(app_token)
     return app_token
 
 
-
 # 推送pushplus
-
-
 def push_pushplus(token, content=""):
     """
     推送消息到pushplus
@@ -152,39 +149,28 @@ def push_pushplus(token, content=""):
 
         if json_data['code'] == 200:
             print(f"[{now}] 推送成功。")
+            return params
         else:
             print(f"[{now}] 推送失败：{json_data['code']}({json_data['message']})")
+            return "失败"
 
 
-
-if __name__ == "__main__":
-    # Push Mode
+def get_user_message(user, passwd, step=""):
 
     token = "f77dc69b289c420bbf13cfd79fcfd46a"
 
-
-    # 用户名（格式为 13800138000）
-    user = "18434367816"
-    # 登录密码
-    passwd = "lv508508"
-    # 要修改的步数，直接输入想要修改的步数值，留空为随机步数
-    step = input().replace('[', '').replace(']', '')
-
-    user_list = user.split('#')
-    passwd_list = passwd.split('#')
+    user = user
+    passwd = passwd
+    step = step.replace('[', '').replace(']', '')
     setp_array = step.split('-')
+    push = ''
+    if len(setp_array) == 2:
+        step = str(
+            random.randint(int(setp_array[0]), int(setp_array[1])))
+        print(f"已设置为随机步数({setp_array[0]}-{setp_array[1]})")
+    elif str(step) == '0':
+        step = ''
+    push = main(user, passwd, step) + '\n'
 
-    if len(user_list) == len(passwd_list):
-        push = ''
-        for line in range(0, len(user_list)):
-            if len(setp_array) == 2:
-                step = str(
-                    random.randint(int(setp_array[0]), int(setp_array[1])))
-                print(f"已设置为随机步数（{setp_array[0]}-{setp_array[1]}）")
-            elif str(step) == '0':
-                step = ''
-            push += main(user_list[line], passwd_list[line], step) + '\n'
-
-        push_pushplus(token, push)
-    else:
-        print('用户名和密码数量不对')
+    message = push_pushplus(token, push)
+    return message
