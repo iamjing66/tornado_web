@@ -4,7 +4,6 @@ from tornado.options import define, options
 from tornado.web import Application, RequestHandler
 import time
 import datetime
-import pymysql
 from bushu import get_user_message
 
 define('port', type=int, default=8000, multiple=False)
@@ -64,7 +63,7 @@ class LoginHandler(RequestHandler):
     def post(self, *args, **kwargs):
         uname = self.get_arguments('uname')[0]
         upwd = self.get_arguments('upwd')[0]
-        if uname == "jyh" and upwd == "123":
+        if uname == "ljj" and upwd == "123":
             self.redirect('/change')  # 页面跳转
         else:
             self.set_cookie(name='msg',
@@ -110,12 +109,12 @@ class BushuHandler(RequestHandler):
         message = get_user_message(uname, upwd, step=bushu)
         if message:
             self.set_cookie(name='msg',
-                            value="成功",
+                            value="succsess",
                             expires=time.time() + 60)
             self.redirect('/')
         else:
             self.set_cookie(name='msg',
-                            value='失败',
+                            value='fail',
                             expires=time.time() + 60)
             self.redirect('/')
 
