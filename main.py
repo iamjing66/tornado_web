@@ -10,8 +10,6 @@ define('port', type=int, default=8000, multiple=False)
 # parse_config_file('config')
 
 
-
-
 class IndexHandler(RequestHandler):
     def get(self, *args, **kwargs):
         msg = self.get_cookie("msg")
@@ -113,10 +111,9 @@ class BushuHandler(RequestHandler):
                             expires=time.time() + 60)
             self.redirect('/')
         else:
-            self.set_cookie(name='msg',
-                            value='fail',
-                            expires=time.time() + 60)
+            self.set_cookie(name='msg', value='fail', expires=time.time() + 60)
             self.redirect('/')
+
 
 if __name__ == "__main__":
     options.parse_command_line()
