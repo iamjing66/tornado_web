@@ -4,6 +4,7 @@ from tornado.options import define, options
 from tornado.web import Application, RequestHandler
 import time
 import datetime
+import os
 from bushu import get_user_message
 
 define('port', type=int, default=8000, multiple=False)
@@ -117,14 +118,19 @@ class BushuHandler(RequestHandler):
 
 if __name__ == "__main__":
     options.parse_command_line()
-    settings = {
-        "template_path": "./templates",
-    }
-    url_list = [('/', JumpHandler), ('/index', IndexHandler),
-                ('/login', LoginHandler), ('/change', ChangeHandler),
-                ('/bushu', BushuHandler)]
+    settings = {"template_path": "./templates", "static_path": "./static"}
+    url_list = [
+        ('/', JumpHandler),
+        ('/index', IndexHandler),
+        ('/login', LoginHandler),
+        ('/change', ChangeHandler),
+        ('/bushu', BushuHandler),
+        (r'/favicon.ico', tornado.web.StaticFileHandler, {
+            'path': './static/favicon.ico'
+        }),
+    ]
 
-    app = Application(url_list, debug=True)
+    app = Application(url_list, settings=settings, debug=True)
     http_server = tornado.httpserver.HTTPServer(app)
     http_server.listen(options.port)
     tornado.ioloop.IOLoop.instance().start()
