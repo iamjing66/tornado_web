@@ -4,7 +4,6 @@ from tornado.options import define, options
 from tornado.web import Application, RequestHandler
 import time
 import datetime
-import os
 from bushu import get_user_message
 
 define('port', type=int, default=8000, multiple=False)
