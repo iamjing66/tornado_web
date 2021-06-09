@@ -142,7 +142,7 @@ def push_pushplus(token, content=""):
     if token == '':
         print("[注意] 未提供token，不进行pushplus推送！")
     else:
-        server_url = f"http://www.pushplus.plus/send"
+        server_url = "http://www.pushplus.plus/send"
         params = {"token": token, "title": '小米运动 步数修改', "content": content}
 
         response = requests.get(server_url, params=params)
@@ -166,8 +166,7 @@ def get_user_message(user, passwd, step=""):
     setp_array = step.split('-')
     push = ''
     if len(setp_array) == 2:
-        step = str(
-            random.randint(int(setp_array[0]), int(setp_array[1])))
+        step = str(random.randint(int(setp_array[0]), int(setp_array[1])))
         print(f"已设置为随机步数({setp_array[0]}-{setp_array[1]})")
     elif str(step) == '0':
         step = ''
