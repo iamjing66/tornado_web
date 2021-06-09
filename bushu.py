@@ -3,11 +3,12 @@
 
 import requests
 import time
+import datetime
 import re
 import json
 import random
 
-now = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+now = (datetime.datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
 headers = {
     'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 9; MI 6 MIUI/20.6.18)'
 }
