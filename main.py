@@ -124,9 +124,6 @@ if __name__ == "__main__":
         ('/login', LoginHandler),
         ('/change', ChangeHandler),
         ('/bushu', BushuHandler),
-        (r'/favicon.ico', tornado.web.StaticFileHandler, {
-            'path': './static/favicon.ico'
-        }),
     ]
 
     app = Application(url_list, settings=settings, debug=True)
