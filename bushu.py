@@ -172,5 +172,7 @@ def get_user_message(user, passwd, step=""):
         step = ''
     push = main(user, passwd, step) + '\n'
 
+    print(push)
+
     message = push_pushplus(token, push)
     return message
