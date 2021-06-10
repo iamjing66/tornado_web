@@ -103,8 +103,9 @@ class BushuHandler(RequestHandler):
         uname = self.get_arguments('uname')[0]
         upwd = self.get_arguments('upwd')[0]
         bushu = self.get_arguments('bushu')[0]
+        now = (datetime.datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
         print(bushu)
-        message = get_user_message(uname, upwd, step=bushu)
+        message = get_user_message(uname, upwd, now, step=bushu)
         if message:
             self.set_cookie(name='msg',
                             value="succsess",
@@ -123,7 +124,7 @@ if __name__ == "__main__":
         ('/index', IndexHandler),
         ('/login', LoginHandler),
         ('/change', ChangeHandler),
-        ('/bushu', BushuHandler),
+        ('/bushu', BushuHandler)
     ]
 
     app = Application(url_list, settings=settings, debug=True)

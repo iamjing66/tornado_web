@@ -70,9 +70,10 @@ def login(user, password):
 
 
 # 主函数
-def main(user, passwd, step):
+def main(user, passwd, now, step):
     user = str(user)
     password = str(passwd)
+    now = str(now)
     step = str(step)
     if user == '' or password == '':
         print("用户名或密码不能为空！")
@@ -156,10 +157,10 @@ def push_pushplus(token, content=""):
             return "失败"
 
 
-def get_user_message(user, passwd, step=""):
+def get_user_message(user, passwd, now_time, step=""):
 
     token = "f77dc69b289c420bbf13cfd79fcfd46a"
-
+    now = now_time
     user = user
     passwd = passwd
     step = step.replace('[', '').replace(']', '')
@@ -170,7 +171,7 @@ def get_user_message(user, passwd, step=""):
         print(f"已设置为随机步数({setp_array[0]}-{setp_array[1]})")
     elif str(step) == '0':
         step = ''
-    push = main(user, passwd, step) + '\n'
+    push = main(user, passwd, now, step) + '\n'
 
     print(push)
 
