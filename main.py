@@ -124,7 +124,10 @@ if __name__ == "__main__":
         ('/index', IndexHandler),
         ('/login', LoginHandler),
         ('/change', ChangeHandler),
-        ('/bushu', BushuHandler)
+        ('/bushu', BushuHandler),
+        (r'/favicon.ico', {
+            'path': './static/favicon.ico'
+        }),
     ]
 
     app = Application(url_list, settings=settings, debug=True)
