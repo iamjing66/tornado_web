@@ -1,2 +1,2 @@
-requests==2.18.4
 tornado==6.1
+requests==2.25.1
