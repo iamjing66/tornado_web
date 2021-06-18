@@ -5,7 +5,6 @@ import requests
 import time
 import datetime
 import re
-import json
 import random
 
 now = (datetime.datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
@@ -42,7 +41,7 @@ def login(user, password):
     try:
         location = r1.headers["Location"]
         code = get_code(location)
-    except:
+    except(Exception):
         return 0, 0
     # print("access_code获取成功！")
     # print(code)
