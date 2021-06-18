@@ -41,7 +41,7 @@ def login(user, password):
     try:
         location = r1.headers["Location"]
         code = get_code(location)
-    except(Exception):
+    except (Exception):
         return 0, 0
     # print("access_code获取成功！")
     # print(code)
