@@ -5,6 +5,8 @@ from tornado.web import Application, RequestHandler
 import time
 import datetime
 import pymysql
+from urllib import parse
+
 from bushu import get_user_message
 
 define('port', type=int, default=8000, multiple=False)
@@ -13,9 +15,9 @@ define('port', type=int, default=8000, multiple=False)
 
 def mysql_connect(user_db):
     db = pymysql.connect(
-        host='localhost',
-        user='root',
-        password=' ',
+        host="localhost",
+        user="root",
+        password="970125",
         db=user_db,
     )
     return db
@@ -73,11 +75,12 @@ class LoginHandler(RequestHandler):
         uname = self.get_arguments('uname')[0]
         upwd = self.get_arguments('upwd')[0]
         user_db = "t_test"
+        user_table = "user_list"
         conn = mysql_connect(user_db)
         cursor = conn.cursor()
         sql = """
         select * from {} where uname = '{}' and upwd = '{}'
-        """.format(user_db, uname, upwd)
+        """.format(user_table, uname, upwd)
         user_message = cursor.execute(sql)
         if user_message:
             self.redirect('/change')  # 页面跳转
