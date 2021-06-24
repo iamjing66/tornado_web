@@ -26,24 +26,7 @@ class IndexHandler(RequestHandler):
         msg = self.get_cookie("msg")
         print(msg)
         if msg == "login":
-            html = '''
-            <head>
-                <title>login</title>
-            </head>
-            <h2>login</h2>
-            <form method=post action=/login enctype=multipart/form-data>
-                <p>
-                    用户名:<input type=text name=uname>
-                </p>
-                <p>
-                    密码:&nbsp;&nbsp;&nbsp;<input type=password name=upwd>
-                </p>
-                <p>
-                    <input type=submit value=提交>
-                </p>
-            </form>
-            '''
-            self.write(html)
+            self.render("./templates/login.html")
         elif msg == "false":
             self.write('wrong!')
         elif msg == "relogin":
