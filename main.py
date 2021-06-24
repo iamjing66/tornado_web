@@ -4,10 +4,21 @@ from tornado.options import define, options
 from tornado.web import Application, RequestHandler
 import time
 import datetime
+import pymysql
 from bushu import get_user_message
 
 define('port', type=int, default=8000, multiple=False)
 # parse_config_file('config')
+
+
+def mysql_connect(user_db):
+    db = pymysql.connect(
+        host='localhost',
+        user='root',
+        password=' ',
+        db=user_db,
+    )
+    return db
 
 
 class IndexHandler(RequestHandler):
@@ -61,7 +72,14 @@ class LoginHandler(RequestHandler):
     def post(self, *args, **kwargs):
         uname = self.get_arguments('uname')[0]
         upwd = self.get_arguments('upwd')[0]
-        if uname == "ljj" and upwd == "123":
+        user_db = "t_test"
+        conn = mysql_connect(user_db)
+        cursor = conn.cursor()
+        sql = """
+        select * from {} where uname = '{}' and upwd = '{}'
+        """.format(user_db, uname, upwd)
+        user_message = cursor.execute(sql)
+        if user_message:
             self.redirect('/change')  # 页面跳转
         else:
             self.set_cookie(name='msg',
