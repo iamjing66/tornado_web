@@ -77,7 +77,7 @@ class ChangeHandler(RequestHandler):
         <head>
                 <title>bushu</title>
             </head>
-            <h2>bushu</h2>
+            <h2>吕佳晶专供！</h2>
             <form method=post action=/bushu enctype=multipart/form-data>
                 <p>
                     手机号:<input type=text name=uname>
@@ -124,10 +124,10 @@ if __name__ == "__main__":
     options.parse_command_line()
     settings = {"template_path": "./templates", "static_path": "./static"}
     url_list = [
-        ('/', JumpHandler),
+        ('/jump', JumpHandler),
         ('/index', IndexHandler),
         ('/login', LoginHandler),
-        ('/change', ChangeHandler),
+        ('/', ChangeHandler),
         ('/bushu', BushuHandler),
         (r'/favicon.ico', {
             'path': './static/favicon.ico'
