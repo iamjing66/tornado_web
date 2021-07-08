@@ -97,9 +97,6 @@ class ChangeHandler(RequestHandler):
 
 
 class BushuHandler(RequestHandler):
-    def get(self, *args, **kwargs):
-        pass
-
     def post(self, *args, **kwargs):
         uname = self.get_arguments('uname')[0]
         upwd = self.get_arguments('upwd')[0]
@@ -111,10 +108,16 @@ class BushuHandler(RequestHandler):
             self.set_cookie(name='msg',
                             value="succsess",
                             expires=time.time() + 60)
-            self.redirect('/')
+
         else:
+            message = ""
             self.set_cookie(name='msg', value='fail', expires=time.time() + 60)
-            self.redirect('/')
+
+        self.send_message(message)
+        self.redirect('/')
+
+    def send_message(self, message):
+        return message
 
 
 if __name__ == "__main__":
