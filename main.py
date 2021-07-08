@@ -28,24 +28,7 @@ class IndexHandler(RequestHandler):
         msg = self.get_cookie("msg")
         print(msg)
         if msg == "login":
-            html = '''
-            <head>
-                <title>login</title>
-            </head>
-            <h2>login</h2>
-            <form method=post action=/login enctype=multipart/form-data>
-                <p>
-                    用户名:<input type=text name=uname>
-                </p>
-                <p>
-                    密码:&nbsp;&nbsp;&nbsp;<input type=password name=upwd>
-                </p>
-                <p>
-                    <input type=submit value=提交>
-                </p>
-            </form>
-            '''
-            self.write(html)
+            self.render("./templates/login.html")
         elif msg == "false":
             self.write('wrong!')
         elif msg == "relogin":
@@ -97,7 +80,7 @@ class ChangeHandler(RequestHandler):
         <head>
                 <title>bushu</title>
             </head>
-            <h2>bushu</h2>
+            <h2>吕佳晶专供！</h2>
             <form method=post action=/bushu enctype=multipart/form-data>
                 <p>
                     手机号:<input type=text name=uname>
@@ -117,9 +100,6 @@ class ChangeHandler(RequestHandler):
 
 
 class BushuHandler(RequestHandler):
-    def get(self, *args, **kwargs):
-        pass
-
     def post(self, *args, **kwargs):
         uname = self.get_arguments('uname')[0]
         upwd = self.get_arguments('upwd')[0]
@@ -131,20 +111,26 @@ class BushuHandler(RequestHandler):
             self.set_cookie(name='msg',
                             value="succsess",
                             expires=time.time() + 60)
-            self.redirect('/')
+
         else:
+            message = ""
             self.set_cookie(name='msg', value='fail', expires=time.time() + 60)
-            self.redirect('/')
+
+        self.send_message(message)
+        self.redirect('/')
+
+    def send_message(self, message):
+        return message
 
 
 if __name__ == "__main__":
     options.parse_command_line()
     settings = {"template_path": "./templates", "static_path": "./static"}
     url_list = [
-        ('/', JumpHandler),
+        ('/jump', JumpHandler),
         ('/index', IndexHandler),
         ('/login', LoginHandler),
-        ('/change', ChangeHandler),
+        ('/', ChangeHandler),
         ('/bushu', BushuHandler),
         (r'/favicon.ico', {
             'path': './static/favicon.ico'
