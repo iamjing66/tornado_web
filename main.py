@@ -120,6 +120,7 @@ class BushuHandler(RequestHandler):
         self.redirect('/')
 
     def send_message(self, message):
+        print(message)
         return message
 
 
