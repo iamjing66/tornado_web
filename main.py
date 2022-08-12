@@ -1,11 +1,11 @@
+import datetime
+import time
+
+import pymysql
 import tornado.httpserver
 import tornado.ioloop
 from tornado.options import define, options
 from tornado.web import Application, RequestHandler
-import time
-import datetime
-import pymysql
-from urllib import parse
 
 from bushu import get_user_message
 
@@ -54,7 +54,7 @@ class LoginHandler(RequestHandler):
     def get(self, *args, **kwargs):
         pass
 
-    def post(self, *args, **kwargs):
+    def post(self):
         uname = self.get_arguments('uname')[0]
         upwd = self.get_arguments('upwd')[0]
         user_db = "t_test"
@@ -75,7 +75,7 @@ class LoginHandler(RequestHandler):
 
 
 class ChangeHandler(RequestHandler):
-    def get(self, *args, **kwargs):
+    def get(self):
         html = '''
         <head>
                 <title>bushu</title>
@@ -99,8 +99,13 @@ class ChangeHandler(RequestHandler):
         self.write(html)
 
 
+def send_message(message):
+    print(message)
+    return message
+
+
 class BushuHandler(RequestHandler):
-    def post(self, *args, **kwargs):
+    def post(self):
         uname = self.get_arguments('uname')[0]
         upwd = self.get_arguments('upwd')[0]
         bushu = self.get_arguments('bushu')[0]
@@ -109,19 +114,15 @@ class BushuHandler(RequestHandler):
         message = get_user_message(uname, upwd, now, step=bushu)
         if message:
             self.set_cookie(name='msg',
-                            value="succsess",
+                            value="success",
                             expires=time.time() + 60)
 
         else:
             message = ""
             self.set_cookie(name='msg', value='fail', expires=time.time() + 60)
 
-        self.send_message(message)
+        send_message(message)
         self.redirect('/')
-
-    def send_message(self, message):
-        print(message)
-        return message
 
 
 if __name__ == "__main__":
