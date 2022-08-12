@@ -10,15 +10,17 @@ from tornado.web import Application, RequestHandler
 from bushu import get_user_message
 
 define('port', type=int, default=8000, multiple=False)
+
+
 # parse_config_file('config')
 
 
 def mysql_connect(user_db):
     db = pymysql.connect(
-        host="localhost",
-        user="root",
-        password="970125",
-        db=user_db,
+            host="localhost",
+            user="root",
+            password="970125",
+            db=user_db,
     )
     return db
 
@@ -42,9 +44,9 @@ class JumpHandler(RequestHandler):
     def get(self, *args, **kwargs):
         msg = self.get_cookie("msg")
         self.render(
-            "./templates/index.html",
-            now_time=(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
-            msg=msg)
+                "./templates/index.html",
+                now_time=(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
+                msg=msg)
 
     def post(self, *args, **kwargs):
         pass
@@ -129,14 +131,14 @@ if __name__ == "__main__":
     options.parse_command_line()
     settings = {"template_path": "./templates", "static_path": "./static"}
     url_list = [
-        ('/jump', JumpHandler),
-        ('/index', IndexHandler),
-        ('/login', LoginHandler),
-        ('/', ChangeHandler),
-        ('/bushu', BushuHandler),
-        (r'/favicon.ico', {
-            'path': './static/favicon.ico'
-        }),
+            ('/jump', JumpHandler),
+            ('/index', IndexHandler),
+            ('/login', LoginHandler),
+            ('/', ChangeHandler),
+            ('/bushu', BushuHandler),
+            (r'/favicon.ico', {
+                    'path': './static/favicon.ico'
+            }),
     ]
 
     app = Application(url_list, settings=settings, debug=True)

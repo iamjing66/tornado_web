@@ -1,15 +1,16 @@
 # -*- coding: utf8 -*-
 # python >=3.8
 
-import requests
-import time
 import datetime
-import re
 import random
+import re
+import time
+
+import requests
 
 now = (datetime.datetime.now()).strftime("%Y-%m-%d %H:%M:%S")
 headers = {
-    'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 9; MI 6 MIUI/20.6.18)'
+        'User-Agent': 'Dalvik/2.1.0 (Linux; U; Android 9; MI 6 MIUI/20.6.18)'
 }
 
 
@@ -24,15 +25,15 @@ def get_code(location):
 def login(user, password):
     url1 = "https://api-user.huami.com/registrations/+86" + user + "/tokens"
     headers = {
-        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-        "User-Agent": "MiFit/4.6.0 (iPhone; iOS 14.0.1; Scale/2.00)"
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+            "User-Agent": "MiFit/4.6.0 (iPhone; iOS 14.0.1; Scale/2.00)"
     }
     data1 = {
-        "client_id": "HuaMi",
-        "password": f"{password}",
-        "redirect_uri":
-        "https://s3-us-west-2.amazonaws.com/hm-registration/successsignin.html",
-        "token": "access"
+            "client_id": "HuaMi",
+            "password": f"{password}",
+            "redirect_uri":
+                "https://s3-us-west-2.amazonaws.com/hm-registration/successsignin.html",
+            "token": "access"
     }
     r1 = requests.post(url1,
                        data=data1,
@@ -48,14 +49,14 @@ def login(user, password):
 
     url2 = "https://account.huami.com/v2/client/login"
     data2 = {
-        "app_name": "com.xiaomi.hm.health",
-        "app_version": "4.6.0",
-        "code": f"{code}",
-        "country_code": "CN",
-        "device_id": "2C8B4939-0CCD-4E94-8CBA-CB8EA6E613A1",
-        "device_model": "phone",
-        "grant_type": "access_token",
-        "third_name": "huami_phone",
+            "app_name": "com.xiaomi.hm.health",
+            "app_version": "4.6.0",
+            "code": f"{code}",
+            "country_code": "CN",
+            "device_id": "2C8B4939-0CCD-4E94-8CBA-CB8EA6E613A1",
+            "device_model": "phone",
+            "grant_type": "access_token",
+            "third_name": "huami_phone",
     }
     r2 = requests.post(url2, data=data2, headers=headers).json()
     login_token = r2["token_info"]["login_token"]
@@ -102,8 +103,8 @@ def main(user, passwd, now_t, step):
 
     url = f'https://api-mifit-cn.huami.com/v1/data/band_data.json?&t={t}'
     head = {
-        "apptoken": app_token,
-        "Content-Type": "application/x-www-form-urlencoded"
+            "apptoken": app_token,
+            "Content-Type": "application/x-www-form-urlencoded"
     }
 
     data = f'userid={userid}&last_sync_data_time=1597306380&device_type=0&last_deviceid=DA932FFFFE8816E7&data_json={data_json}'
@@ -156,7 +157,6 @@ def push_pushplus(token, content=""):
 
 
 def get_user_message(user, passwd, now_time, step=""):
-
     token = "f77dc69b289c420bbf13cfd79fcfd46a"
     user = user
     passwd = passwd
